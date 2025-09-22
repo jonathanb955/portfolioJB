@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mon Portfolio – BAO Jonathan</title>
+  <meta name="description" content="Portfolio HTML+CSS : projets, compétences, veille techno, parcours et CV téléchargeable." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link href="assets/index.css" rel="stylesheet">
+</head>
+<style>
+
+  /* ====== Variables & Reset ====== */
+  :root {
+    --bg: #0f1220;
+    --bg-soft: #151a2e;
+    --card: #11162a;
+    --text: #e8eaf3;
+    --muted: #b6bdd6;
+    --brand: #6ea8ff;
+    --brand-2: #9b8cff;
+    --accent: #7ce0b8;
+    --danger: #ff7373;
+    --shadow: 0 10px 25px rgba(0,0,0,.3);
+    --radius: 18px;
+    --maxw: 1150px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f5f7ff; --bg-soft:#eef2ff; --card:#ffffff; --text:#0e132a; --muted:#4b5573; --shadow: 0 8px 18px rgba(0,0,0,.08); }
+    a:hover { text-decoration-color: var(--brand); }
+  }
+
+  *,*::before,*::after{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: radial-gradient(1200px 800px at 70% -10%, rgba(110,168,255,.20), transparent), radial-gradient(900px 600px at -10% 20%, rgba(155,140,255,.20), transparent), var(--bg); color:var(--text); }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration: underline; text-decoration-color: transparent; transition: .2s ease; }
+  a:focus-visible, button:focus-visible{ outline: 2px dashed var(--brand); outline-offset: 3px; border-radius: 8px; }
+
+  /* ====== Layout ====== */
+  .container{ width:100%; max-width: var(--maxw); margin:0 auto; padding: 0 20px; }
+  .section{ padding: 72px 0; }
+  .section h2{ font-size: clamp(1.6rem, 2.4vw, 2.2rem); margin:0 0 18px; letter-spacing: -0.02em; }
+  .section p.lead{ color: var(--muted); margin-top: 0; }
+
+  /* ====== Skip link ====== */
+  .skip{ position: absolute; left: -999px; top:auto; width:1px; height:1px; overflow:hidden; }
+  .skip:focus{ position: fixed; left: 12px; top: 12px; width:auto; height:auto; padding:10px 14px; background: var(--accent); color:#052016; border-radius: 10px; z-index:9999; }
+
+  /* ====== Header & Nav ====== */
+  header{ position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(1.1) blur(8px); background: color-mix(in oklab, var(--bg-soft) 70%, transparent); border-bottom: 1px solid rgba(255,255,255,.06); }
+  .nav{ display:flex; align-items:center; justify-content: space-between; gap: 12px; padding: 14px 0; }
+  .brand{ display:flex; align-items:center; gap:12px; font-weight: 800; letter-spacing: -0.02em; }
+  .avatar{ width:36px; height:36px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-2)); box-shadow: var(--shadow); }
+  nav ul{ display:flex; gap: 14px; list-style:none; padding:0; margin:0; }
+  nav a{ text-decoration:none; background: linear-gradient(90deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight:600; padding:8px 10px; border-radius:10px; }
+  nav a:hover{ background: linear-gradient(90deg, var(--brand), var(--accent)); -webkit-background-clip: text; background-clip: text; }
+
+  .cta{ display:flex; gap:10px; align-items:center; }
+  .btn{ border:1px solid rgba(255,255,255,.14); background: color-mix(in oklab, var(--card), transparent 15%); color:var(--text); padding:10px 14px; border-radius: 999px; text-decoration:none; font-weight:600; box-shadow: var(--shadow); }
+  .btn:hover{ transform: translateY(-1px); }
+
+  /* ====== Hero ====== */
+  .hero{ padding: 64px 0 24px; }
+  .hero-wrap{ display:grid; grid-template-columns: 1.2fr .8fr; gap: 32px; align-items:center; }
+  .kicker{ display:inline-block; font-weight:700; letter-spacing:.12em; text-transform: uppercase; font-size: .8rem; color: var(--accent); margin-bottom: 10px; }
+  h1{ font-size: clamp(2rem, 3.6vw, 3rem); margin:.2rem 0 1rem; letter-spacing: -0.03em; }
+  .hero p{ color: var(--muted); font-size: 1.05rem; margin-top:0; }
+  .hero-card{ background: linear-gradient(180deg, color-mix(in oklab, var(--card), transparent 10%), color-mix(in oklab, var(--card), transparent 0%)); border: 1px solid rgba(255,255,255,.08); padding: 22px; border-radius: var(--radius); box-shadow: var(--shadow); }
+  .tagline{ display:flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
+  .chip{ padding:6px 10px; border-radius: 999px; border:1px solid rgba(255,255,255,.14); background: color-mix(in oklab, var(--bg-soft), transparent 10%); font-size:.9rem; }
+
+  /* ====== Grids & Cards ====== */
+  .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
+  .cards-3 > *{ grid-column: span 4; }
+  .cards-2 > *{ grid-column: span 6; }
+  .card{ background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius: var(--radius); overflow:hidden; box-shadow: var(--shadow); display:flex; flex-direction: column; }
+  .card figure{ aspect-ratio: 16/9; background: linear-gradient(135deg, color-mix(in oklab, var(--brand) 70%, transparent), color-mix(in oklab, var(--brand-2) 60%, transparent)); }
+  .card .content{ padding: 18px; display:flex; flex-direction: column; gap:10px; }
+  .card h3{ margin:0; font-size: 1.1rem; }
+  .meta{ font-size:.9rem; color: var(--muted); }
+  .tags{ display:flex; flex-wrap: wrap; gap:8px; }
+  .tag{ font-size:.8rem; border:1px solid rgba(255,255,255,.14); padding:4px 8px; border-radius: 999px; }
+
+  /* ====== Compétences ====== */
+  .skills{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .skill{ background: var(--card); border:1px solid rgba(255,255,255,.08); padding: 14px; border-radius: 14px; }
+  .skill .head{ display:flex; align-items:center; justify-content: space-between; font-weight:600; margin-bottom: 8px; }
+  .bar{ height:10px; background: color-mix(in oklab, var(--bg-soft), transparent 10%); border-radius:999px; overflow:hidden; }
+  .bar > span{ display:block; height:100%; width:var(--val, 50%); background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
+
+  /* ====== Timeline ====== */
+  .timeline{ position: relative; padding-left: 28px; }
+  .timeline::before{ content:""; position:absolute; left: 9px; top:0; bottom:0; width:2px; background: linear-gradient(var(--brand), var(--brand-2)); border-radius: 2px; }
+  .tl-item{ position: relative; margin-bottom: 20px; }
+  .tl-item::before{ content:""; position:absolute; left:-2px; top:4px; width:14px; height:14px; border-radius:50%; background: var(--bg); border:3px solid var(--brand); box-shadow: 0 0 0 4px rgba(110,168,255,.15); }
+  .tl-item .when{ font-weight:700; color: var(--accent); }
+  .tl-item .what{ margin: 4px 0 0; color: var(--muted); }
+
+  /* ====== Veille Techno ====== */
+  .feed{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .feed article{ grid-column: span 6; background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 14px; }
+  .feed h3{ margin: 0 0 6px; font-size: 1rem; }
+  .feed p{ margin:0; color: var(--muted); }
+
+  /* ====== Footer ====== */
+  footer{ padding: 50px 0; border-top:1px solid rgba(255,255,255,.08); background: color-mix(in oklab, var(--bg-soft), transparent 5%); margin-top: 30px; }
+  .social{ display:flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ====== Utilities ====== */
+  .muted{ color: var(--muted); }
+  .center{ text-align:center; }
+  .pill{ display:inline-flex; gap:10px; align-items:center; padding:10px 14px; border-radius:999px; background: color-mix(in oklab, var(--bg-soft), transparent 6%); border:1px solid rgba(255,255,255,.08); }
+
+  /* ====== Responsive ====== */
+  @media (max-width: 900px){
+    .hero-wrap{ grid-template-columns: 1fr; }
+    .cards-3 > *{ grid-column: span 6; }
+    .skills{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px){
+    .cards-3 > *,.cards-2 > *{ grid-column: 1 / -1; }
+    nav ul{ display:none; }
+    .cta{ display:none; }
+  }
+
+  /* ====== Print ====== */
+  @media print{
+    header, .btn, .chip, .tag, .tags { filter: grayscale(1); }
+    a{ text-decoration:none; }
+  }
+  /* --- Apparition au scroll --- */
+  .hidden {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- Hover des cartes --- */
+  .card.hovered {
+    transform: translateY(-6px) scale(1.02);
+    transition: transform .3s ease, box-shadow .3s ease;
+    box-shadow: 0 15px 30px rgba(0,0,0,.35);
+  }
+  /* Bouton "Voir plus" sous les projets */
+  .see-more {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .btn-more {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: color-mix(in oklab, var(--card), transparent 15%);
+    box-shadow: var(--shadow);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform .2s ease;
+  }
+  .btn-more:hover {
+    transform: translateY(-2px);
+  }
+  /* Bouton "Voir plus" sous les projets */
+  .see-more {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .btn-more {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: color-mix(in oklab, var(--card), transparent 15%);
+    box-shadow: var(--shadow);
+    color: var(--text);
+    text-decoration: none;
+    transition: transform .2s ease;
+  }
+  .btn-more:hover {
+    transform: translateY(-2px);
+  }
+
+</style>
+<body>
+<a href="#contenu" class="skip">Accéder au contenu</a>
+
+<!-- ====== Header & Nav ====== -->
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <div class="avatar" aria-hidden="true"></div>
+      <span>BAO Jonathan</span>
+    </div>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#a-propos">À propos</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#veille">Veille techno</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="cta" role="group" aria-label="Actions rapides">
+
+      <a class="btn" href="cv.pdf" download>📄 Télécharger mon CV</a>
+    </div>
+  </div>
+</header>
+
+<!-- ====== Hero ====== -->
+<main id="contenu" class="hero" role="main">
+  <div class="container hero-wrap">
+    <div>
+      <span class="kicker">Étudiant - Développeur Junior</span>
+      <h1>Bonjour, je suis <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent;"><br>BAO Jonathan</span>.</h1>
+      <p>Je conçois des applications web performantes et accessibles. Ici, vous trouverez une sélection de mes <strong>projets</strong>, une présentation de <strong>mes compétences</strong>, ma <strong>veille technologique</strong>, et les étapes clés de <strong>mon parcours</strong>.</p>
+      <div class="tagline">
+        <span class="chip">#HTML</span>
+        <span class="chip">#CSS</span>
+        <span class="chip">#Accessible</span>
+        <span class="chip">#Performance</span>
+      </div>
+    </div>
+    <div class="hero-card" aria-label="Carte de présentation">
+      <p class="muted">Disponible pour : alternance · freelance · CDI</p>
+      <div class="tags" aria-label="Technos favorites">
+
+      </div>
+      <div style="height:10px"></div>
+      <a class="btn" href="#projets">Voir mes projets ↓</a>
+    </div>
+  </div>
+</main>
+
+<!-- ====== Projets ====== -->
+<section id="projets" class="section" aria-labelledby="projets-title">
+  <div class="container">
+    <h2 id="projets-title">Projets</h2>
+    <p class="lead">Une sélection récente. Remplacez les vignettes, titres et liens par vos propres projets GitHub, démos ou études de cas.</p>
+    <div class="grid cards-3">
+      <!-- Carte Projet 1 -->
+      <article class="card">
+        <figure aria-label="Aperçu du projet Paristanbul"></figure>
+        <div class="content">
+          <h3>Formulaire recrutement + gestion de qr code </h3>
+          <p>Formulaire web avec envoi automatique des données par email et génération dynamique de QR code.</p>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">MySQL</span></div>
+          <p><a href="https://paristanbul-recrutement82.vercel.app/">Voir la démo</a> ·
+            <a href="https://github.com/jonathanb955/paristanbul-recrutement.git">Code source</a></p>
+        </div>
+      </article>
+      <!-- Carte Projet 2 -->
+      <article class="card">
+        <figure aria-label="Aperçu du projet Paristanbul"></figure>
+        <div class="content">
+          <h3>Site vitrine Paristanbul – en cours de développement</h3>
+          <p>Création en cours d’un site web vitrine pour la chaîne de supermarchés Paristanbul.</p>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">MySQL</span></div>
+          <p><a href="#">Voir la démo</a> ·
+            <a href="https://github.com/jonathanb955/Projet-Paristanbul.git">Code source</a></p>
+        </div>
+      </article>
+      <!-- Carte Projet 3 -->
+      <article class="card">
+        <figure aria-label="Aperçu du projet aéroport"></figure>
+        <div class="content">
+          <h3>Site web aéroportuaire – projet étudiant</h3>
+          <p>Site web responsive et accessible, optimisé pour la performance, réalisé dans le cadre d’un projet étudiant.</p>
+          <div class="tags"><span class="tag">PHP</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span><span class="tag">MySQL</span></div>
+          <p>
+            <a href="https://github.com/jonathanb955/Projet-Vol.git">Code source</a></p>
+        </div>
+      </article>
+
+    </div>
+    <div class="see-more">
+      <a href="projets.html" class="btn btn-more">Voir plus</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== À propos & Compétences ====== -->
+<section id="a-propos" class="section" aria-labelledby="apropos-title">
+  <div class="container">
+    <h2 id="apropos-title">À propos</h2>
+    <p class="lead">Une courte présentation, votre façon de travailler et ce qui vous motive.</p>
+    <div class="grid cards-2">
+      <article class="card" aria-label="Présentation">
+        <div class="content">
+          <h3>Qui suis-je ?</h3>
+          <p>Passionné·e par le web, j'aime transformer des idées en expériences simples, rapides et inclusives. J'accorde une attention particulière au design system, à l'accessibilité (RGAA/WCAG) et à la qualité.</p>
+          <ul>
+            <li>Basé·e à : <strong>Gonesse</strong></li>
+            <li>Langues : FR, EN</li>
+            <li>Disponibilités : <em>...</em></li>
+          </ul>
+        </div>
+      </article>
+      <article id="competences" class="card" aria-label="Compétences">
+        <div class="content">
+          <h3>Compétences clés</h3>
+          <div class="skills">
+            <div class="skill"><div class="head"><span>HTML sémantique</span><span>90%</span></div><div class="bar"><span style="--val:90%"></span></div></div>
+            <div class="skill"><div class="head"><span>CSS (Flex/Grid)</span><span>85%</span></div><div class="bar"><span style="--val:85%"></span></div></div>
+            <div class="skill"><div class="head"><span>Outils informatiques (Canva, Microsoft Office 365)</span><span>80%</span></div><div class="bar"><span style="--val:80%"></span></div></div>
+            <div class="skill"><div class="head"><span>Java</span><span>75%</span></div><div class="bar"><span style="--val:75%"></span></div></div>
+            <div class="skill"><div class="head"><span>PHP</span><span>75%</span></div><div class="bar"><span style="--val:75%"></span></div></div>
+            <div class="skill"><div class="head"><span>MySQL</span><span>75%</span></div><div class="bar"><span style="--val:75%"></span></div></div>
+            <div class="skill"><div class="head"><span>Boostrap</span><span>75%</span></div><div class="bar"><span style="--val:75%"></span></div></div>
+            <div class="skill"><div class="head"><span>Git, Github</span><span>75%</span></div><div class="bar"><span style="--val:75%"></span></div></div>
+          </div>
+          <p class="muted" style="margin-top:12px">.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Veille techno ====== -->
+<section id="veille" class="section" aria-labelledby="veille-title">
+  <div class="container">
+    <h2 id="veille-title">Veille technologique</h2>
+    <p class="lead">Sélection d'articles, talks et ressources que je recommande (mise à jour régulière).</p>
+    <div class="feed">
+      <article>
+        <h3><a href="#">Performance CSS moderne</a></h3>
+        <p>Notes sur : containment, subgrid, container queries, nouveaux sélecteurs…</p>
+        <div class="tags"><span class="tag">CSS</span><span class="tag">Performance</span><span class="tag">Guide</span></div>
+      </article>
+      <article>
+        <h3><a href="#">Accessibilité : checklists utiles</a></h3>
+        <p>Raccourcis pratiques pour auditer rapidement une page web.</p>
+        <div class="tags"><span class="tag">A11y</span><span class="tag">RGAA</span></div>
+      </article>
+      <article>
+        <h3><a href="#">Tendances front‑end 2025</a></h3>
+        <p>Un tour d'horizon des patterns UI et outils qui comptent cette année.</p>
+        <div class="tags"><span class="tag">Front‑end</span><span class="tag">Tendances</span></div>
+      </article>
+      <article>
+        <h3><a href="#">Sécurité côté client</a></h3>
+        <p>Bonnes pratiques content‑security‑policy (CSP) et gestion des formulaires.</p>
+        <div class="tags"><span class="tag">Sécurité</span><span class="tag">Web</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Parcours ====== -->
+<section id="parcours" class="section" aria-labelledby="parcours-title">
+  <div class="container">
+    <h2 id="parcours-title">Mon parcours</h2>
+    <p class="lead">Études, expériences et certifications.</p>
+    <div class="timeline" aria-label="Frise chronologique">
+      <div class="tl-item">
+        <div class="when">--2025 – Aujourd'hui</div>
+        <div class="what"><strong>Alternance </strong> — Paristanbul · HTML, CSS , bases de données, optimisation.</div>
+      </div>
+      <div class="tl-item">
+        <div class="when">--2024 - Aujourd'hui</div>
+        <div class="what"><strong>BTS SIO option SLAM</strong> — Lycée privé Robert Schuman · 93440 Dugny</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="when">--2021 – 2024</div>
+        <div class="what"><strong>Baccalauréat Professionel AGOrA</strong> — Lycée polyvalent privé ORT  · 95400 Villiers-le-Bel</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== Contact ====== -->
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="container">
+    <h2 id="contact-title">Contact</h2>
+    <p class="lead">Envie de collaborer ? Parlons‑en.</p>
+    <div class="grid cards-2">
+      <div class="card">
+        <div class="content">
+          <p class="pill">📧 <a href="mailto:prenom.nom@email.com">baojonathan95@gmail.com</a></p>
+          <p class="pill">📞 <a href="tel:+33000000000">07 83 33 25 40</a></p>
+          <p class="pill">📍 5bis rue de la Liberté, 95500 Gonesse-France</p>
+          <p><a class="btn" href="file:///C:/Users/baojo/Downloads/CV%20Jonathan%20BAO.pdf" download>📄 Télécharger mon CV</a></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="content">
+          <h3>Réseaux</h3>
+          <div class="social">
+            <a class="btn" href="https://github.com/jonathanb955">GitHub</a>
+            <a class="btn" href="https://www.linkedin.com/in/jonathan-bao-724890342">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  <div class="container center">
+    <p class="muted">© <span id="year">2025</span> Portfolio —  BAO Jonathan</p>
+  </div>
+</footer>
+</body>
+</html>
+<script>
+  // ========== Apparition des sections ==========
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.section, .card').forEach(el => {
+    el.classList.add('hidden');
+    observer.observe(el);
+  });
+
+  // ========== Survol des cartes ==========
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseenter', () => card.classList.add('hovered'));
+    card.addEventListener('mouseleave', () => card.classList.remove('hovered'));
+  });
+
+  // ========== Gradient pulsant sur le h1 ==========
+  const heroTitle = document.querySelector('h1 span');
+  if(heroTitle){
+    let hue = 0;
+    setInterval(() => {
+      hue = (hue + 1) % 360;
+      heroTitle.style.background = `linear-gradient(90deg,
+      hsl(${hue}, 80%, 70%),
+      hsl(${(hue+60)%360}, 80%, 70%))`;
+      heroTitle.style.webkitBackgroundClip = 'text';
+      heroTitle.style.backgroundClip = 'text';
+    }, 50);
+  }
+
+  // ========== Année dynamique ==========
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
